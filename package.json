@@ -5,6 +5,8 @@
   "workspaces": [
     "backend"
   ],
+
+  "type": "module",
   "dependencies": {
     "aws-sdk": "^2.1043.0"
   },

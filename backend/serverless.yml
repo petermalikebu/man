@@ -1,0 +1,34 @@
+
+service: aws-backend
+frameworkVersion: "3"
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  region: us-east-1
+  stage: dev
+
+functions:
+  hello:
+    handler: handler.hello
+
+# you can add CloudFormation resource templates here
+resources:
+  Resources:
+    FileBucket:
+      Type: AWS::S3::Bucket
+      DeletionPolicy: Retain
+      Properties:
+        BucketName: !Sub '${file(./unique-bucket-name.cjs):bucketName}'
+        BucketEncryption:
+          ServerSideEncryptionConfiguration:
+            - ServerSideEncryptionByDefault:
+                SSEAlgorithm: AES256
+        PublicAccessBlockConfiguration:
+          RestrictPublicBuckets: true
+          BlockPublicAcls: true
+          IgnorePublicAcls: true
+          BlockPublicPolicy: true
+        NotificationConfiguration:
+          EventBridgeConfiguration:
+            EventBridgeEnabled: true
