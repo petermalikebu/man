@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
+    "predeploy": "node unique-bucket-name.cjs",
+    "deploy": "npm run predeploy && sls deploy",
+    "print": "npm run predeploy && sls print",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
